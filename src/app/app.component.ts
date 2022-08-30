@@ -8,3 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'test-loop';
 }
+
+// let dialogRef = dialog.open(YourDialog, {
+//   data: { name: 'austin' },
+// });
