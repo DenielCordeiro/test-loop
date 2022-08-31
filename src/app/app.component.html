@@ -1,16 +1,14 @@
-<section id="content">
-  <!-- <header>
+<section *ngIf="loggedInUser" id="content">
+  <header>
     <app-header></app-header>
-  </header> -->
+  </header>
 
-  <app-vehicles></app-vehicles>
+  <router-outlet></router-outlet>
 </section>
 
-<!-- <section id="login">
+<section *ngIf="!loggedInUser" id="login">
   <app-login></app-login>
-</section> -->
-
-
+</section>
 
 <!-- <section id="icons">
   <img src="https://cdn.readymix.io/img/icons/default.png">

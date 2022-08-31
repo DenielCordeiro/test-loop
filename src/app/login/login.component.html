@@ -1,33 +1,38 @@
 <div class="container">
 
-<div class="content-form">
-  <form>
-    <div class="title">
-      <h1>Login</h1>
-    </div>
+  <div class="content-form">
+    <form #formLogin="ngForm">
+      <div class="title">
+        <h1>Login</h1>
+      </div>
 
-    <div class="fields">
-      <mat-form-field appearance="fill">
-        <mat-label>Name:</mat-label>
-        <input type="text" matInput [value]="name">
-      </mat-form-field>
+      <div class="form-group fields">
+        <mat-form-field appearance="fill">
+          <mat-label>Name:</mat-label>
+          <input type="text" class="form-control" matInput name="userName" id="userName" #userName="ngModel" [(ngModel)]="login.login">
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Company Name:</mat-label>
-        <input type="text" matInput [value]="companyName">
-      </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password:</mat-label>
+          <input type="password" class="form-control" matInput name="password" id="password" #password="ngModel" [(ngModel)]="login.password">
+        </mat-form-field>
+      </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Password:</mat-label>
-        <input type="password" matInput [value]="password">
-      </mat-form-field>
-    </div>
-  </form>
+      <div class="buttons">
+        <button type="submit" mat-stroked-button color="primary" (click)="makeLogin()" [disabled]="!formLogin.form.valid">Login</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="content-image">
+
+  </div>
 </div>
 
-<div class="content-image">
+<!-- <div *ngIf="message" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 
-</div>
-
-</div>
-
+  <button type="button" class="close" data-dismiss="alert" aria-label="close" (click)="$event.preventDefault()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div> -->
