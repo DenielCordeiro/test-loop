@@ -6,11 +6,11 @@ import { LoginRoutes } from './login/auth-routing.module';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'login',
-  //   pathMatch: 'full',
-  // },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
   {
     path: 'login',
     component: LoginComponent
@@ -18,10 +18,10 @@ const routes: Routes = [
   {
     path: 'vehicles',
     component: VehiclesComponent,
-    // canActivate: [AuthGuard],
-    // data: {
-    //   role: 'USER, ADMIN'
-    // }
+    canActivate: [AuthGuard],
+    data: {
+      role: 'USER, ADMIN'
+    }
   },
   ...LoginRoutes
 ];
