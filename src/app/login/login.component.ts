@@ -10,7 +10,6 @@ export class LoginComponent implements OnInit {
   companyName: string = '';
   password: string = '';
 
-
   constructor() { }
 
   ngOnInit(): void {
