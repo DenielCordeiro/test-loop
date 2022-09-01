@@ -8,10 +8,7 @@ import { LoginService } from './../services/login.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(
-    private loginService: LoginService,
-    private router: Router
-  ) { }
+  constructor( private loginService: LoginService ) { }
 
   ngOnInit(): void {
   }

@@ -1,9 +1,9 @@
-<section *ngIf="loggedInUser" id="content">
+<section *ngIf="loggedInUser?.perfil === 'USER' || loggedInUser?.perfil === 'ADMIN'" id="content">
   <header>
     <app-header></app-header>
   </header>
 
-  <router-outlet></router-outlet>
+  <app-vehicles></app-vehicles>
 </section>
 
 <section *ngIf="!loggedInUser" id="login">

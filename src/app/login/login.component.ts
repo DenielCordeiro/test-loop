@@ -13,8 +13,6 @@ export class LoginComponent implements OnInit {
   @ViewChild('formLogin') formLogin! : NgForm
 
   login: Login = new Login()
-  message: string = '';
-  loading: boolean = false;
 
   constructor(
     private loginService: LoginService,
@@ -26,25 +24,15 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.message = params['error'];
-    });
-  }
+  ngOnInit(): void {}
 
   makeLogin(): void {
-    this.loading = true;
-
     if (this.formLogin.form.valid) {
 
       this.loginService.login(this.login).subscribe((checkUser) => {
         if (checkUser != null) {
           this.loginService.loggedInUser = checkUser;
-          this.loading = false;
           this.router.navigate( ["/vehicles"] );
-        } else {
-          this.loading = false;
-          this.message = "Usuário ou Senha Invalidos.";
         }
       });
     }

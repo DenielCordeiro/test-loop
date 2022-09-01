@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from './login/auth.module';
+import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -20,6 +20,7 @@ import { AddComponent } from './vehicles/add/add.component';
 import { EditComponent } from './vehicles/edit/edit.component';
 import { DeleteComponent } from './vehicles/delete/delete.component';
 import { VehiclesTableComponent } from './vehicles/vehicles-table/vehicles-table.component';
+import { LoginErrorComponent } from './login-error/login-error.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { VehiclesTableComponent } from './vehicles/vehicles-table/vehicles-table
     AddComponent,
     EditComponent,
     DeleteComponent,
-    VehiclesTableComponent
+    VehiclesTableComponent,
+    LoginErrorComponent
   ],
   imports: [
     BrowserModule,
