@@ -1,4 +1,5 @@
 @use '../../assets/sass/variables'
+@use '../../assets/sass/base-mixins'
 
 .container
   width: 100%
@@ -7,7 +8,7 @@
   flex-direction: row
 
   .content-form
-    width: 35%
+    width: 40%
     background-color: variables.$blue
     padding: 15vh 8vw
 
@@ -32,3 +33,15 @@
         width: 100%
         text-align: end
 
+
+  .content-image
+    width: 60%
+
+  @include base-mixins.mobile
+    .content-form
+      width: 90%
+      background-color: variables.$blue
+      padding: 15vh 8vw
+
+    .content-image
+      display: none
