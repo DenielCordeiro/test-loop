@@ -1,0 +1,47 @@
+@use '../../assets/sass/variables'
+
+.container
+  display: flex
+  justify-content: center
+
+  .content-table
+    width: 65%
+
+    .line
+      margin-bottom: 3vh
+      background-color: variables.$light-gray
+
+    .header-table
+      width: 100%
+      box-shadow: 0 4px 7px 1px rgba(0,0,0,0.3)
+      display: flex
+      justify-content: space-between
+      background-color: variables.$white
+
+      .search
+        padding: 10px 0 5px 24px
+
+        .search-input
+          font-size: 10px
+          width: 15vw
+          height: 18px
+          background-color: variables.$light-blue
+          border: 1px solid variables.$light-blue
+          border-top-left-radius: 5px
+          border-top-right-radius: 5px
+          border-bottom-left-radius: 5px
+          border-bottom-right-radius: 5px
+
+      .add
+        padding: 4px 24px 5px 0
+
+        button
+          font-size: 10pt
+          color: variables.$blue
+
+    table
+      width: 100%
+
+    .paginate
+      box-shadow: 0 4px 7px 1px rgba(0,0,0,0.3)
+

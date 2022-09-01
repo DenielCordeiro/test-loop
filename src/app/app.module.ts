@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
@@ -19,7 +21,6 @@ import { HeaderComponent } from './header/header.component';
 import { AddComponent } from './vehicles/add/add.component';
 import { EditComponent } from './vehicles/edit/edit.component';
 import { DeleteComponent } from './vehicles/delete/delete.component';
-import { VehiclesTableComponent } from './vehicles/vehicles-table/vehicles-table.component';
 import { LoginErrorComponent } from './login-error/login-error.component';
 
 @NgModule({
@@ -31,7 +32,6 @@ import { LoginErrorComponent } from './login-error/login-error.component';
     AddComponent,
     EditComponent,
     DeleteComponent,
-    VehiclesTableComponent,
     LoginErrorComponent
   ],
   imports: [
@@ -45,7 +45,9 @@ import { LoginErrorComponent } from './login-error/login-error.component';
     MatInputModule,
     MatDialogModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

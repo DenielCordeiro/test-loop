@@ -1,7 +1,53 @@
-<!-- <button mat-raised-button (click)="add()">Pick one</button>
-<button mat-raised-button (click)="edit()">edit</button>
-<button mat-raised-button (click)="delete()">delete</button> -->
+<div class="container">
+  <div class="content-table">
+    <h1>Vehicles</h1>
 
-<h1>Vehicles</h1>
+    <hr class="line">
 
-<hr class="line">
+    <div class="header-table">
+      <div class="search">
+        <input type="text" class="search-input">
+      </div>
+
+      <div class="add">
+        <button mat-button color="primary" (click)="add()">
+          <span>Add Vehicle</span>
+        </button>
+      </div>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="icon">
+        <th mat-header-cell *matHeaderCellDef> icon </th>
+        <td mat-cell *matCellDef="let element"> {{element.icon}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="internalCode">
+        <th mat-header-cell *matHeaderCellDef> internal Code </th>
+        <td mat-cell *matCellDef="let element"> {{element.internalCode}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button (click)="edit()">edit</button>
+          <button mat-raised-button (click)="delete()">delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <div class="paginate">
+      <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
+    </div>
+  </div>
+</div>
+

@@ -1,14 +1,16 @@
-<section *ngIf="loggedInUser?.perfil === 'USER' || loggedInUser?.perfil === 'ADMIN'" id="content">
-  <header>
-    <app-header></app-header>
-  </header>
+<body>
+  <section *ngIf="loggedInUser?.perfil === 'USER' || loggedInUser?.perfil === 'ADMIN'" id="content">
+    <header>
+      <app-header></app-header>
+    </header>
 
-  <app-vehicles></app-vehicles>
-</section>
+    <app-vehicles></app-vehicles>
+  </section>
 
-<section *ngIf="!loggedInUser" id="login">
-  <app-login></app-login>
-</section>
+  <section *ngIf="!loggedInUser" id="login">
+    <app-login></app-login>
+  </section>
+</body>
 
 <!-- <section id="icons">
   <img src="https://cdn.readymix.io/img/icons/default.png">
