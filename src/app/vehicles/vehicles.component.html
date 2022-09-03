@@ -10,33 +10,37 @@
       </div>
 
       <div class="add">
-        <button mat-button color="primary" (click)="add()">
+        <button mat-button color="primary" (click)="add(null)">
           <span>Add Vehicle</span>
         </button>
       </div>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
       <ng-container matColumnDef="icon">
-        <th mat-header-cell *matHeaderCellDef> icon </th>
+        <th mat-header-cell *matHeaderCellDef>icon</th>
         <td mat-cell *matCellDef="let element"> {{element.icon}} </td>
       </ng-container>
 
       <ng-container matColumnDef="internalCode">
-        <th mat-header-cell *matHeaderCellDef> internal Code </th>
+        <th mat-header-cell *matHeaderCellDef>internal Code</th>
         <td mat-cell *matCellDef="let element"> {{element.internalCode}} </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button mat-raised-button (click)="edit()">edit</button>
-          <button mat-raised-button (click)="delete()">delete</button>
+          <button mat-icon-button (click)="edit(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteElement(element.id)">
+            <mat-icon class="mat-buttons">delete</mat-icon>
+          </button>
         </td>
       </ng-container>
 

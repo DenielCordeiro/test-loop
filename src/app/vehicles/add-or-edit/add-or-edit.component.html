@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>want to delete this vehicle ?</h1>
+<h1 *ngIf="!isChange" mat-dialog-title>Create Vehicle</h1>
+<h1 *ngIf="isChange" mat-dialog-title>Edit Vehicle</h1>
 
 <div mat-dialog-content>
-
-  <!-- <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill">
     <mat-label>Icon</mat-label>
     <mat-select [(value)]="selected" [(ngModel)]="data.icon">
       <mat-option>None</mat-option>
@@ -20,12 +20,11 @@
   <mat-form-field appearance="fill">
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="data.name">
-  </mat-form-field> -->
+  </mat-form-field>
 </div>
-
-
 
 <div mat-dialog-actions>
   <button mat-button (click)="cancel()">Cancel</button>
-  <button mat-stroked-button [mat-dialog-close]="data" cdkFocusInitial color="warn">delete</button>
+  <button *ngIf="!isChange" mat-stroked-button [mat-dialog-close]="data" cdkFocusInitial color="primary">Create</button>
+  <button *ngIf="isChange" mat-stroked-button [mat-dialog-close]="data" cdkFocusInitial color="primary">Edit Vehicle</button>
 </div>
