@@ -22,20 +22,21 @@ export class LoginService {
   }
 
   login(login: Login): Observable<User | null> {
-    let checkUser = new User(1, login.login, login.password);
+    let checkUser = new User(1, login.name, login.password);
 
-    if (login.login == login.password) {
+    if (login.name == "user" || login.name == "admin" && login.password == "user" || login.password == "admin") {
 
-      if (login.login == "user") {
-        checkUser = new User(1, "User", login.login, login.password, "USER");
+      if (login.name == "user") {
+        checkUser = new User(1, login.name, login.password, "USER");
       }
-      else if (login.login == "admin") {
-        checkUser = new User(1, "Admin", login.login, login.password, "ADMIN");
+      else if (login.name == "admin") {
+        checkUser = new User(2, login.name, login.password, "ADMIN");
       }
 
       return of(checkUser);
 
     } else {
+      alert('Incorrect username or password');
       return of(null);
     }
   }
