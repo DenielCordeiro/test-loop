@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PeriodicElement } from 'src/app/models/periodic-element.model';
-
-
+import { Vehicle } from 'src/app/models/vehicle.model';
 @Component({
   selector: 'app-delete',
   templateUrl: './delete.component.html',
@@ -12,7 +10,7 @@ export class DeleteComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: PeriodicElement,
+    public data: Vehicle,
     public dialogRef: MatDialogRef<DeleteComponent>,
   ) { }
 

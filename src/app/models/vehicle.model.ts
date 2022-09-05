@@ -1,4 +1,4 @@
-export interface PeriodicElement {
+export interface Vehicle {
   id: number;
   icon: string;
   internalCode: string;

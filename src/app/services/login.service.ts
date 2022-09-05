@@ -4,7 +4,6 @@ import { Login } from '../models/login.model';
 import { User } from './../models/user.model';
 
 const KEY: string = "loggedInUser"
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,9 +21,9 @@ export class LoginService {
   }
 
   login(login: Login): Observable<User | null> {
-    let checkUser = new User(1, login.name, login.password);
+    let checkUser = new User();
 
-    if (login.name == "user" || login.name == "admin" && login.password == "user" || login.password == "admin") {
+    if (login.name === "user" || login.name === "admin" && login.password === "user" || login.password === "admin") {
 
       if (login.name == "user") {
         checkUser = new User(1, login.name, login.password, "USER");
@@ -44,5 +43,4 @@ export class LoginService {
   logout() {
     delete localStorage[KEY];
   }
-
 }

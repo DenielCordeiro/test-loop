@@ -1,21 +1,19 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PeriodicElement } from '../../models/periodic-element.model';
-
-
+import { Vehicle } from '../../models/vehicle.model';
 @Component({
   selector: 'app-add',
   templateUrl: './add-or-edit.component.html',
   styleUrls: ['./add-or-edit.component.sass']
 })
 export class AddOrEditComponent implements OnInit {
-  element!: PeriodicElement;
+  element!: Vehicle;
   selected = 'option2';
   isChange!: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: PeriodicElement,
+    public data: Vehicle,
     public dialogRef: MatDialogRef<AddOrEditComponent>,
   ) { }
 

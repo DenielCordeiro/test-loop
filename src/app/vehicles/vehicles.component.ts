@@ -3,35 +3,35 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddOrEditComponent } from './add-or-edit/add-or-edit.component';
 import { DeleteComponent } from './delete/delete.component';
 import { MatTable } from '@angular/material/table';
-import { PeriodicElementService } from '../services/periodic-element.service';
-import { PeriodicElement } from '../models/periodic-element.model';
+import { VehiclesService } from '../services/vehicles-service.service';
+import { Vehicle } from '../models/vehicle.model';
 
 @Component({
   selector: 'app-vehicles',
   templateUrl: './vehicles.component.html',
   styleUrls: ['./vehicles.component.sass'],
-  providers: [PeriodicElementService]
+  providers: [VehiclesService]
 })
 export class VehiclesComponent implements OnInit {
   @ViewChild(MatTable)
   table!: MatTable<any>
 
   displayedColumns: string[] = ['icon', 'internalCode', 'name', 'actions'];
-  dataSource!: PeriodicElement[];
+  dataSource!: Vehicle[];
 
   constructor(
     public dialog: MatDialog,
-    public periodicElementService: PeriodicElementService
+    public vehiclesService: VehiclesService
   ) {
-    this.periodicElementService.getElements()
-      .subscribe((data: PeriodicElement[]) => {
+    this.vehiclesService.getElements()
+      .subscribe((data: Vehicle[]) => {
         this.dataSource = data;
       });
   }
 
   ngOnInit(): void { }
 
-  add(element: PeriodicElement | null): void {
+  add(element: Vehicle | null): void {
     const dialogRef = this.dialog.open(AddOrEditComponent, {
       width: '70%',
       data: element === null ? {
@@ -49,15 +49,15 @@ export class VehiclesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
         if (this.dataSource.map(i => i.id).includes(result.id)) {
-          this.periodicElementService.editElements(result)
-            .subscribe((data: PeriodicElement) => {
+          this.vehiclesService.editElements(result)
+            .subscribe((data: Vehicle) => {
               const index = this.dataSource.findIndex(i => i.id === data.id)
               this.dataSource[index] = data;
               this.table.renderRows();
             })
         } else {
-          this.periodicElementService.createElements(result)
-          .subscribe((data: PeriodicElement) => {
+          this.vehiclesService.createElements(result)
+          .subscribe((data: Vehicle) => {
             this.dataSource.push(data);
             this.table.renderRows();
           });
@@ -66,7 +66,7 @@ export class VehiclesComponent implements OnInit {
     });
   }
 
-  edit(element: PeriodicElement): void {
+  edit(element: Vehicle): void {
     this.add(element);
   }
 
@@ -77,7 +77,7 @@ export class VehiclesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.periodicElementService.deleteElement(id)
+        this.vehiclesService.deleteElement(id)
           .subscribe(() => {
             this.dataSource = this.dataSource.filter(i => i.id !== id);
             this.table.renderRows();

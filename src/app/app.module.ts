@@ -24,7 +24,6 @@ import { HeaderComponent } from './header/header.component';
 import { AddOrEditComponent } from './vehicles/add-or-edit/add-or-edit.component';
 import { DeleteComponent } from './vehicles/delete/delete.component';
 import { LoginErrorComponent } from './login-error/login-error.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,9 +49,10 @@ import { LoginErrorComponent } from './login-error/login-error.component';
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {}
