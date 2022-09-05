@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -24,6 +28,9 @@ import { HeaderComponent } from './header/header.component';
 import { AddOrEditComponent } from './vehicles/add-or-edit/add-or-edit.component';
 import { DeleteComponent } from './vehicles/delete/delete.component';
 import { LoginErrorComponent } from './login-error/login-error.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +57,10 @@ import { LoginErrorComponent } from './login-error/login-error.component';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

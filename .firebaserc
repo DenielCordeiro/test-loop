@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "vehicles7439b": {
+      "hosting": {
+        "test-loop": [
+          "vehicles7439b"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "vehicles7439b"
+  }
+}

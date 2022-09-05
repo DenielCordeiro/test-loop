@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Login } from '../models/login.model';
 import { User } from './../models/user.model';
@@ -9,7 +10,7 @@ const KEY: string = "loggedInUser"
 })
 export class LoginService {
 
-  constructor() { }
+  constructor( private router: Router ) { }
 
   public get loggedInUser(): User {
     let checkUser = localStorage[KEY];
@@ -23,18 +24,24 @@ export class LoginService {
   login(login: Login): Observable<User | null> {
     let checkUser = new User();
 
-    if (login.name === "user" || login.name === "admin" && login.password === "user" || login.password === "admin") {
+    if (login.name === login.password) {
 
       if (login.name == "user") {
         checkUser = new User(1, login.name, login.password, "USER");
+        return of(checkUser);
       }
       else if (login.name == "admin") {
         checkUser = new User(2, login.name, login.password, "ADMIN");
+        return of(checkUser);
+      }
+      else if (login.name != "user" || login.password != "admin") {
+        alert('Incorrect username or password');
+        delete localStorage[KEY];
+        this.router.navigate(["/login"]);
       }
 
-      return of(checkUser);
-
-    } else {
+      return of();
+    }  else {
       alert('Incorrect username or password');
       return of(null);
     }
