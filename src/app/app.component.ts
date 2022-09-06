@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
 import { User } from './models/user.model';
-import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,11 @@ import { LoginService } from './services/login.service';
 })
 export class AppComponent {
   title = 'test-loop';
+  // loggedInUser?: boolean;
 
-  constructor( private loginService: LoginService ) {}
+  constructor( private authService: AuthService ) {}
 
   get loggedInUser(): User | null {
-    return this.loginService.loggedInUser;
+    return this.authService.loggedInUser;
   }
 }

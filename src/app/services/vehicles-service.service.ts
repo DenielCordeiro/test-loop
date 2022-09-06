@@ -1,17 +1,34 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Vehicle } from '../models/vehicle.model';
 import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class VehiclesService {
-  elementApiUrl = ''
+  elementApiUrl = 'https://api.360kpi.io/planning/vehicle';
 
   constructor( private http: HttpClient ) { }
 
   getElements(): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>(this.elementApiUrl);
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // 'Authorization': `Bearer${
+      //   this.company,
+      //   this.firebase_token,
+      //   this.refresh_token
+      // }`,
+      'timeOutSeconds': '3000'
+    })
+
+    let time = httpHeaders.get('timeOutSeconds');
+
+    if (time = '3000') {
+      httpHeaders.set('Authorization', '');
+    }
+
+    return this.http.get<Vehicle[]>(this.elementApiUrl, {headers: httpHeaders});
   }
 
   createElements(element: Vehicle): Observable<Vehicle> {
@@ -22,7 +39,7 @@ export class VehiclesService {
     return this.http.put<Vehicle>(this.elementApiUrl, element);
   }
 
-  deleteElement(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.elementApiUrl}?id=${id}`);
+  deleteElement(company: number): Observable<any> {
+    return this.http.delete<any>(`${this.elementApiUrl}?id=${company}`);
   }
 }

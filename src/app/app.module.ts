@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,15 +22,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { environment } from '../environments/environment';
 
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';
 import { HeaderComponent } from './header/header.component';
 import { AddOrEditComponent } from './vehicles/add-or-edit/add-or-edit.component';
 import { DeleteComponent } from './vehicles/delete/delete.component';
-import { LoginErrorComponent } from './login-error/login-error.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { provideDatabase,getDatabase } from '@angular/fire/database';
 
 @NgModule({
   declarations: [
@@ -39,7 +38,6 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
     HeaderComponent,
     AddOrEditComponent,
     DeleteComponent,
-    LoginErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -60,9 +58,9 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 

@@ -8,7 +8,7 @@ import { Vehicle } from '../../models/vehicle.model';
 })
 export class AddOrEditComponent implements OnInit {
   element!: Vehicle;
-  selected = 'option2';
+  selected = '';
   isChange!: boolean;
 
   constructor(

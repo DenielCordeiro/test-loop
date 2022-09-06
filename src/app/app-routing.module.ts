@@ -5,7 +5,6 @@ import { LoginRoutes } from './auth/auth-routing.module';
 import { AuthGuard } from './auth/auth.guard';
 import { VehiclesComponent } from './vehicles/vehicles.component';
 import { LoginComponent } from './login/login.component';
-import { LoginErrorComponent } from './login-error/login-error.component';
 
 const routes: Routes = [
   {
@@ -24,10 +23,6 @@ const routes: Routes = [
     data: {
       role: 'USER, ADMIN'
     }
-  },
-  {
-    path: 'login-error',
-    component: LoginErrorComponent,
   },
   ...LoginRoutes
 ];

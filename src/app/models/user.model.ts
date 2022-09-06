@@ -1,7 +1,7 @@
 export class User {
   constructor (
-    public companyId?: number,
-    public name?: string,
+    public id?: number,
+    public email?: string,
     public password?: string,
     public perfil?: string
   ) {}

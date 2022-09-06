@@ -1,5 +1,5 @@
 export interface Vehicle {
-  id: number;
+  company: number;
   icon: string;
   internalCode: string;
   name: string;
