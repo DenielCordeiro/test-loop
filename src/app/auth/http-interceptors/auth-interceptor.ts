@@ -13,7 +13,7 @@ export class AuthInterceptor implements AuthInterceptor {
     const token = this.authService.getAuthorizationToken();
     let request: HttpRequest<any> = req;
 
-    if (token) {
+    if (token && !this.authService.isTokenExperid(token)) {
 
       request = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${token}`)

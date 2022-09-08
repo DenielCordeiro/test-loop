@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
-import { User } from './models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +12,6 @@ export class AppComponent {
   constructor( private authService: AuthService ) {}
 
   get loggedInUser() {
-    return this.authService.loggedInUser;
+    return this.authService.getAuthorizationToken();
   }
 }

@@ -17,8 +17,7 @@ export class VehiclesService {
     const httpHeaders = new HttpHeaders({
       'content-type': 'application/json',
       'Authorization': `Bearer${token}`
-    })
-
+    });
 
     return this.http.get<Vehicle[]>(this.elementApiUrl, {headers: httpHeaders});
   }
