@@ -9,11 +9,10 @@ import { User } from './models/user.model';
 })
 export class AppComponent {
   title = 'test-loop';
-  // loggedInUser?: boolean;
 
   constructor( private authService: AuthService ) {}
 
-  get loggedInUser(): User | null {
+  get loggedInUser() {
     return this.authService.loggedInUser;
   }
 }

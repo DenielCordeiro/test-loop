@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit {
   async makeLogin() {
     try{
       if (this.formLogin.form.valid) {
-        const result = await this.authService.authUser(this.login);
-        console.log(`Login efetuado: ${result}`);
-        this.router.navigate(["/vehicles"]);
+        await
+          this.authService.authUser(this.login)
+          this.router.navigate(["/vehicles"]);
       }
     } catch (error) {
       console.error(error);

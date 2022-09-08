@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Vehicle } from '../models/vehicle.model';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +10,15 @@ import { Observable } from 'rxjs';
 export class VehiclesService {
   elementApiUrl = 'https://api.360kpi.io/planning/vehicle';
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient, private authService: AuthService ) { }
 
   getElements(): Observable<Vehicle[]> {
+    const token = this.authService.getAuthorizationToken();
     const httpHeaders = new HttpHeaders({
       'content-type': 'application/json',
-      // 'Authorization': `Bearer${
-      //   this.company,
-      //   this.firebase_token,
-      //   this.refresh_token
-      // }`,
-      'timeOutSeconds': '3000'
+      'Authorization': `Bearer${token}`
     })
 
-    let time = httpHeaders.get('timeOutSeconds');
-
-    if (time = '3000') {
-      httpHeaders.set('Authorization', '');
-    }
 
     return this.http.get<Vehicle[]>(this.elementApiUrl, {headers: httpHeaders});
   }

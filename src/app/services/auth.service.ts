@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Login } from '../models/login.model';
-import { Observable, of } from 'rxjs';
-import { User } from '../models/user.model';
 import { environment } from './../../environments/environment';
 
-
-let Usertoken = ''
+let Usertoken: string;
 @Injectable({
   providedIn: 'root'
 })
@@ -14,13 +11,8 @@ export class AuthService {
 
   constructor( private http: HttpClient ) {}
 
-  public get loggedInUser(): User {
-    let checkUser = localStorage[Usertoken];
-    return (checkUser ? JSON.parse(localStorage[Usertoken]) : null);
-  }
-
-  public set loggedInUser(user: User) {
-    localStorage[Usertoken] = JSON.stringify(user);
+  public get loggedInUser() {
+    return this.getAuthorizationToken();
   }
 
   async authUser(login: Login) {
@@ -40,28 +32,6 @@ export class AuthService {
   }
 
   logout() {
-    delete localStorage[Usertoken];
+    window.localStorage.removeItem('token');
   }
-
-  // authUser(login: Login): Observable<any> {
-  //   let checkUser = new User();
-
-  //   const httpHeaders = new HttpHeaders({
-  //     'content-type': 'application/json',
-  //     'Authorization': `Bearer${this.token}`
-  //   })
-
-  //   this.http.post<any>(`${this.loginApiUrl}?email=${login.email}&password=${login.password}`, httpHeaders);
-
-  //   if (login.email, login.password) {
-
-  //     if (login.email == "dcordeiro962@gmail.com" && login.password == "12345678") {
-  //       checkUser = new User(1, login.email, login.password, "Daniel Cordeiro");
-  //     }
-
-  //     return of(checkUser);
-  //   } else {
-  //     alert('Incorrect username or password');
-  //   }
-  // }
 }

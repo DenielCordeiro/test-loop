@@ -21,7 +21,7 @@ const routes: Routes = [
     component: VehiclesComponent,
     canActivate: [AuthGuard],
     data: {
-      role: 'USER, ADMIN'
+      token: 'token'
     }
   },
   ...LoginRoutes

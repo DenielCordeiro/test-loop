@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       let url = state.url;
 
       if (loggedUser) {
-        if (route.data?.['role'] && route.data?.['role'].indexOf(loggedUser)===-1) {
+        if (route.data?.['token'] && route.data?.['token'].indexOf(loggedUser)===-1) {
 
           this.router.navigate(['/login'], {
             queryParams: { error: "Proibido o acesso a " + url }
