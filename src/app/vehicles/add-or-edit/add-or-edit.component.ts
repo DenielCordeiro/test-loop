@@ -18,10 +18,10 @@ export class AddOrEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.data.codbt != null) {
-      this.isChange = true;
-    } else {
+    if (this.data.codbt != '') {
       this.isChange = false;
+    } else {
+      this.isChange = true;
     }
   }
 
