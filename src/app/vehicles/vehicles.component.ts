@@ -46,6 +46,7 @@ export class VehiclesComponent implements OnInit {
   //         //
   //         break;
   //  }
+
   }
 
   add(element: Vehicle | null): void {

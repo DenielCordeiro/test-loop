@@ -22,7 +22,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { environment } from '../environments/environment';
 
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';

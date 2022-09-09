@@ -15,9 +15,7 @@ export class AuthInterceptor implements AuthInterceptor {
     let request: HttpRequest<any> = req;
 
     if (token && !this.authService.isTokenExperid(token)) {
-
       request = req.clone({
-        // headers: req.headers.set('firebase', `${token}`),
         headers: new HttpHeaders({
           'business-app': environment.businessApp,
           'company': environment.company,
