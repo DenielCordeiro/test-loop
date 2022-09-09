@@ -18,35 +18,18 @@ export class VehiclesComponent implements OnInit {
 
   displayedColumns: string[] = ['icon', 'codbt', 'name', 'actions'];
   dataSource!: Vehicle[];
-  test: any;
 
   constructor(
     public dialog: MatDialog,
     public vehiclesService: VehiclesService,
   ) {
-    this.vehiclesService.getElements()
-      .subscribe((data: any) => {
-        this.dataSource = data.data;
-      });
+      this.vehiclesService.getElements()
+        .subscribe((data: any) => {
+          this.dataSource = data.data;
+        });
   }
 
   ngOnInit(): void {
-
-  //   switch ( expression ) {
-  //     case value1:
-  //         // statement 1
-  //         break;
-  //     case value2:
-  //         // statement 2
-  //         break;
-  //     case valueN:
-  //         // statement N
-  //         break;
-  //     default:
-  //         //
-  //         break;
-  //  }
-
   }
 
   add(element: Vehicle | null): void {

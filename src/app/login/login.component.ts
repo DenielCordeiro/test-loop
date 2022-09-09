@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["/vehicles"]);
       }
     } catch (error) {
+      alert('Incorrect Email or Password! [INSERT THEM AGAIN]')
       console.error(error);
     }
   }
