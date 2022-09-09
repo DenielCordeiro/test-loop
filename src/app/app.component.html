@@ -1,5 +1,5 @@
 <body>
-  <section *ngIf="loggedInUser?.perfil === 'USER' || loggedInUser?.perfil === 'ADMIN'" id="content">
+  <section *ngIf="loggedInUser" id="content">
     <header>
       <app-header></app-header>
     </header>
@@ -11,22 +11,3 @@
     <app-login></app-login>
   </section>
 </body>
-
-<!-- <section id="icons">
-  <img src="https://cdn.readymix.io/img/icons/default.png">
-  <img src="https://cdn.readymix.io/img/icons/A_34.png">
-  <img src="https://cdn.readymix.io/img/icons/B_19.png">
-  <img src="https://cdn.readymix.io/img/icons/L_13.png">
-  <img src="https://cdn.readymix.io/img/icons/1.png">
-  <img src="https://cdn.readymix.io/img/icons/M_5.png">
-  <img src="https://cdn.readymix.io/img/icons/A_39.png">
-  <img src="https://cdn.readymix.io/img/icons/Y_1.png">
-  <img src="https://cdn.readymix.io/img/icons/H_4.png">
-  <img src="https://cdn.readymix.io/img/icons/O_2.png">
-  <img src="https://cdn.readymix.io/img/icons/M_21.png">
-  <img src="https://cdn.readymix.io/img/icons/L_7.png">
-  <img src="https://cdn.readymix.io/img/icons/Z_6.png">
-  <img src="https://cdn.readymix.io/img/icons/M_23.png">
-  <img src="https://cdn.readymix.io/img/icons/Z_24.png">
-  <img src="https://cdn.readymix.io/img/icons/M_13.png">
-</section> -->

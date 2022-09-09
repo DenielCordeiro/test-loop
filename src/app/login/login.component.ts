@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LoginService } from './../services/login.service';
+import { Router } from '@angular/router';
+import { AuthService } from './../services/auth.service';
 import { Login } from '../models/login.model';
 @Component({
   selector: 'app-login',
@@ -15,26 +15,22 @@ export class LoginComponent implements OnInit {
   login: Login = new Login()
 
   constructor(
-    private loginService: LoginService,
+    public authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
-  ) {
-    if (this.loginService.loggedInUser) {
-      this.router.navigate( ["/vehicles"] );
-    }
-  }
+  ) {}
 
   ngOnInit(): void {}
 
-  makeLogin(): void {
-    if (this.formLogin.form.valid) {
-
-      this.loginService.login(this.login).subscribe((checkUser) => {
-        if (checkUser != null) {
-          this.loginService.loggedInUser = checkUser;
-          this.router.navigate( ["/vehicles"] );
-        }
-      });
+  async makeLogin() {
+    try{
+      if (this.formLogin.form.valid) {
+        await
+          this.authService.authUser(this.login)
+          this.router.navigate(["/vehicles"]);
+      }
+    } catch (error) {
+      alert('Incorrect Email or Password! [INSERT THEM AGAIN]')
+      console.error(error);
     }
   }
 }

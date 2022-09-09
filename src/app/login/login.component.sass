@@ -33,10 +33,15 @@
         width: 100%
         text-align: end
 
-
-  .content-image
+  .content-welcome
     width: 60%
     background-color: variables.$light-blue
+    text-align: center
+    padding-top: 40vh
+
+    h1
+      font-size: 50pt
+      font-weight: 500
 
   @include base-mixins.mobile
     .content-form
@@ -44,5 +49,5 @@
       background-color: variables.$blue
       padding: 15vh 8vw
 
-    .content-image
+    .content-welcome
       display: none

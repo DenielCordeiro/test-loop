@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="content-form">
     <form #formLogin="ngForm">
       <div class="title">
@@ -8,8 +7,8 @@
 
       <div class="form-group fields">
         <mat-form-field appearance="fill">
-          <mat-label>Name:</mat-label>
-          <input type="text" class="form-control" matInput name="userName" id="userName" #userName="ngModel" [(ngModel)]="login.login">
+          <mat-label>E-mail:</mat-label>
+          <input type="email" class="form-control" matInput name="email" id="email" #userName="ngModel" [(ngModel)]="login.email">
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -24,15 +23,7 @@
     </form>
   </div>
 
-  <div class="content-image">
-    <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus dolorum voluptates rem illum dolorem nemo eos, a nam. Nesciunt atque veniam asperiores architecto odit aspernatur in tenetur quam quas nam.</h1>
+  <div class="content-welcome">
+    <h1>Welcome</h1>
   </div>
 </div>
-
-<!-- <div *ngIf="message" class="alert alert-danger alert-dismissible fade show" role="alert">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-
-  <button type="button" class="close" data-dismiss="alert" aria-label="close" (click)="$event.preventDefault()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div> -->

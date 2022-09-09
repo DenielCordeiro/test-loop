@@ -1,71 +1,93 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddComponent } from './add/add.component';
-export interface PeriodicElement {
-  icon: string;
-  internalCode: string;
-  name: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {icon: 'test', internalCode: 'sde', name: 'Hydrogen'},
-];
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+import { AddOrEditComponent } from './add-or-edit/add-or-edit.component';
+import { DeleteComponent } from './delete/delete.component';
+import { MatTable } from '@angular/material/table';
+import { VehiclesService } from '../services/vehicles-service.service';
+import { Vehicle } from '../models/vehicle.model';
 
 @Component({
   selector: 'app-vehicles',
   templateUrl: './vehicles.component.html',
-  styleUrls: ['./vehicles.component.sass']
+  styleUrls: ['./vehicles.component.sass'],
+  providers: [VehiclesService]
 })
 export class VehiclesComponent implements OnInit {
-  displayedColumns: string[] = ['icon', 'internalCode', 'name', 'actions'];
-  dataSource = ELEMENT_DATA;
+  @ViewChild(MatTable)
+  table!: MatTable<any>
 
-  animal: string = '';
-  name: string = '';
+  displayedColumns: string[] = ['icon', 'codbt', 'name', 'actions'];
+  dataSource!: Vehicle[];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    public vehiclesService: VehiclesService,
+  ) {
+      this.vehiclesService.getElements()
+        .subscribe((data: any) => {
+          this.dataSource = data.data;
+        });
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
-
-  add(): void {
-    const dialogRef = this.dialog.open(AddComponent, {
+  add(element: Vehicle | null): void {
+    const dialogRef = this.dialog.open(AddOrEditComponent, {
       width: '70%',
-      data: {name: this.name, animal: this.animal},
+      data: element === null ? {
+        icon: '',
+        codbt: '',
+        name: '',
+        company: 429,
+        type: 0
+      } :  {
+        id: element.id,
+        company: element.company,
+        icon: element.icon,
+        codbt: element.codbt,
+        name: element.name,
+        type: element.type.id
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+      if (result !== undefined) {
+        if ('id' in result) {
+          this.vehiclesService.editElements(result)
+            .subscribe((data: any) => {
+              const index = this.dataSource.findIndex(i => i.id === data.id)
+              this.dataSource[index] = data;
+              this.table.renderRows();
+            })
+        } else {
+          this.vehiclesService.createElements(result)
+          .subscribe((data: any) => {
+            this.dataSource.push(data.data);
+            this.table.renderRows();
+          });
+        }
+      }
     });
   }
 
-  edit(): void {
-    const dialogRef = this.dialog.open(AddComponent, {
-      width: '70%',
-      data: {name: this.name, animal: this.animal},
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-    });
+  edit(element: Vehicle): void {
+    this.add(element);
   }
 
-  delete(): void {
-    const dialogRef = this.dialog.open(AddComponent, {
+  deleteVehicle(element: Vehicle): void {
+    const dialogRef = this.dialog.open(DeleteComponent, {
       width: '70%',
-      data: {name: this.name, animal: this.animal},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
+      if (result !== undefined) {
+        this.vehiclesService.deleteElement(element)
+          .subscribe(() => {
+            this.dataSource = this.dataSource.filter(i => i.id !== element.id);
+            this.table.renderRows();
+          });
+      }
     });
   }
 }

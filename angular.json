@@ -102,6 +102,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "test-loop:build:production",
+            "firebaseProject": "vehicles7439b",
+            "firebaseHostingSite": "vehicles7439b"
+          }
         }
       }
     }

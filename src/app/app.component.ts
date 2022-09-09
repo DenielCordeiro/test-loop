@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { User } from './models/user.model';
-import { LoginService } from './services/login.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +9,9 @@ import { LoginService } from './services/login.service';
 export class AppComponent {
   title = 'test-loop';
 
-  constructor( private loginService: LoginService ) {}
+  constructor( private authService: AuthService ) {}
 
-  get loggedInUser(): User | null {
-    return this.loginService.loggedInUser;
+  get loggedInUser() {
+    return this.authService.getAuthorizationToken();
   }
 }
