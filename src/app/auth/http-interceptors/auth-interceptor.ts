@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpRequest, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements AuthInterceptor {
@@ -16,7 +17,13 @@ export class AuthInterceptor implements AuthInterceptor {
     if (token && !this.authService.isTokenExperid(token)) {
 
       request = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${token}`)
+        // headers: req.headers.set('firebase', `${token}`),
+        headers: new HttpHeaders({
+          'business-app': environment.businessApp,
+          'company': environment.company,
+          'firebase': token,
+          'refresh': environment.refresh
+        })
       });
     }
 

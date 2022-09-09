@@ -18,7 +18,7 @@ export class AddOrEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.data.internalCode != null) {
+    if (this.data.codbt != null) {
       this.isChange = true;
     } else {
       this.isChange = false;
