@@ -15,7 +15,6 @@ import { Vehicle } from '../models/vehicle.model';
 export class VehiclesComponent implements OnInit {
   @ViewChild(MatTable)
   table!: MatTable<any>
-
   displayedColumns: string[] = ['icon', 'codbt', 'name', 'actions'];
   dataSource!: Vehicle[];
 
@@ -32,62 +31,24 @@ export class VehiclesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  add(element: Vehicle | null): void {
+  add(data: Vehicle | null): void {
     const dialogRef = this.dialog.open(AddOrEditComponent, {
       width: '70%',
-      data: element === null ? {
-        icon: '',
-        codbt: '',
-        name: '',
-        company: 429,
-        type: 0
-      } :  {
-        id: element.id,
-        company: element.company,
-        icon: element.icon,
-        codbt: element.codbt,
-        name: element.name,
-        type: element.type.id
-      }
+      data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        if ('id' in result) {
-          this.vehiclesService.editElements(result)
-            .subscribe((data: any) => {
-              const index = this.dataSource.findIndex(i => i.id === data.id)
-              this.dataSource[index] = data;
-              this.table.renderRows();
-            })
-        } else {
-          this.vehiclesService.createElements(result)
-          .subscribe((data: any) => {
-            this.dataSource.push(data.data);
-            this.table.renderRows();
-          });
-        }
-      }
+      this.table.renderRows();
     });
   }
 
-  edit(element: Vehicle): void {
-    this.add(element);
+  edit(data: Vehicle): void {
+    this.add(data);
   }
 
-  deleteVehicle(element: Vehicle): void {
+  deleteVehicle(data: Vehicle): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
       width: '70%',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        this.vehiclesService.deleteElement(element)
-          .subscribe(() => {
-            this.dataSource = this.dataSource.filter(i => i.id !== element.id);
-            this.table.renderRows();
-          });
-      }
     });
   }
 }
