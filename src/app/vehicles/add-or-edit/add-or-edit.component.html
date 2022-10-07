@@ -1,13 +1,14 @@
-<h1 *ngIf="isChange" mat-dialog-title>Create Vehicle</h1>
-<h1 *ngIf="!isChange" mat-dialog-title>Edit Vehicle</h1>
+<h1 *ngIf="data == null" mat-dialog-title>Create Vehicle</h1>
+<h1 *ngIf="data != null" mat-dialog-title>Edit Vehicle</h1>
 
   <form [formGroup]="form">
 
     <div mat-dialog-content class="content">
-      <mat-form-field appearance="fill" class="collum">
-        <mat-label>Icon</mat-label>
+      <mat-form-field appearance="fill" class="select">
+        <mat-label *ngIf="this.form.value.icon == null">icon</mat-label>
+        <mat-label *ngIf="this.form.value.icon != null"><img [src]=" urlIcon + this.form.value.icon"></mat-label>
         <mat-select [(value)]="selected" formControlName="icon">
-          <mat-option *ngFor="let icon of icons" value="{{ icon }}"><img [src]=" urlIcon + icon "></mat-option>
+          <mat-option *ngFor="let icon of icons" [value]=" icon "><img [src]=" urlIcon + icon "></mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -26,9 +27,15 @@
 
     <div mat-dialog-actions class="footer-dialog">
       <button mat-button (click)="cancel()">Cancel</button>
-      <button *ngIf="isChange" mat-stroked-button color="primary" (click)="add()" [disabled]="form.invalid">Create</button>
-      <button *ngIf="!isChange" mat-stroked-button color="primary" (click)="edit()" [disabled]="form.invalid">Edit Vehicle</button>
+      <button *ngIf="data == null" mat-stroked-button color="primary" (click)="add()" [disabled]="form.invalid">Create</button>
+      <button *ngIf="data != null" mat-stroked-button color="primary" (click)="edit()" [disabled]="form.invalid">Edit Vehicle</button>
     </div>
 
   </form>
 
+
+<ng-template [ngIf]="loading">
+  <div class="progress-bar">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</ng-template>

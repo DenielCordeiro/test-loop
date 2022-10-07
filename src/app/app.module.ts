@@ -8,6 +8,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -17,6 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
@@ -45,6 +48,7 @@ import { DeleteComponent } from './vehicles/delete/delete.component';
         FormsModule,
         AuthModule,
         HttpClientModule,
+        MatCardModule,
         MatGridListModule,
         MatFormFieldModule,
         MatInputModule,
@@ -54,6 +58,8 @@ import { DeleteComponent } from './vehicles/delete/delete.component';
         MatTableModule,
         MatPaginatorModule,
         MatSelectModule,
+        MatProgressBarModule,
+        MatSnackBarModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireDatabaseModule,
         AngularFireAuthModule,

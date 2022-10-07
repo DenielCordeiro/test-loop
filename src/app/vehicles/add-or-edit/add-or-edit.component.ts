@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms'
+import { FormGroup, FormBuilder, Validators} from '@angular/forms'
 import { Vehicle } from '../../models/vehicle.model';
-import {VehiclesService} from "../../services/vehicles-service.service";
+import { VehiclesService } from "../../services/vehicles-service.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add',
@@ -11,7 +12,6 @@ import {VehiclesService} from "../../services/vehicles-service.service";
 })
 export class AddOrEditComponent implements OnInit {
   selected = '';
-  isChange!: boolean;
   form!: FormGroup;
   icons: string[] = [
     'default.png',
@@ -30,7 +30,7 @@ export class AddOrEditComponent implements OnInit {
     'Z_24.png',
     'M_13.png',
   ];
-
+  loading: boolean = false;
   urlIcon: string = 'https://cdn.readymix.io/img/icons/';
 
   constructor(
@@ -38,38 +38,69 @@ export class AddOrEditComponent implements OnInit {
     public data: Vehicle,
     public dialogRef: MatDialogRef<AddOrEditComponent>,
     public vehiclesService: VehiclesService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
   }
 
   ngOnInit(): void {
-    let inputsForm = this.form = this.formBuilder.group({
-      "id": [null],
+    this.form = this.formBuilder.group({
       "icon": [null],
       "codbt": [null, Validators.required],
-      "name": [null]
+      "name": [null],
     });
 
     this.form.patchValue(this.data);
-
-    if (this.data != null ) {
-      this.isChange = false;
-    } else {
-      this.isChange = true;
-    }
   }
 
   add(): void {
-    let vehicle: Vehicle =  Object.assign(new Vehicle(), this.form.value);
-    console.log(vehicle);
+    let additional: {} = {
+      "company": 429,
+      "type": 0
+    }
+    let vehicle: Vehicle =  Object.assign(new Vehicle(), this.form.value, additional);
+    vehicle.type = 0
+    this.loading = true;
+    this.vehiclesService.createVehicle(vehicle)
+      .then(() => {
+        this.openSnackBar('Created Vehicle', 'close');
+        this.dialogRef.close(true);
+      })
+      .catch((error) => {
+        this.openSnackBar('[ERROR!]   ' + console.error(error.error), 'closed');
+      })
+      .finally(() => {
+        this.loading = false;
+      })
   }
 
   edit(): void {
-    let vehicle =  Object.assign(new Vehicle(), this.form.value);
-    console.log(vehicle)
+    let additional: {} = {
+      "id": this.data.id,
+      "company": 429,
+      "type": 0
+    }
+    let vehicle =  Object.assign(new Vehicle(),  this.form.value, additional);
+
+    this.loading = true;
+    this.vehiclesService.editVehicle(vehicle)
+      .then(() => {
+        this.openSnackBar('Edited Vehicle','close');
+        this.dialogRef.close(true);
+      })
+      .catch((error) => {
+        this.openSnackBar('[ERROR!]   ' + console.error(error.error), 'closed');
+      })
+      .finally(() => {
+        this.loading = false;
+      })
   }
 
   cancel(): void {
     this.dialogRef.close();
+  }
+
+  openSnackBar(message: string,action: string) {
+    this._snackBar.open(message, action);
   }
 }

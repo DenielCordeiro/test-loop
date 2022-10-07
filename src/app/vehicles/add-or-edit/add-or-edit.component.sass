@@ -1,6 +1,16 @@
-
+@use '../../../assets/sass/base-mixins'
 .collum
-  margin-right: 2%
+  width: 43%
+  margin-left: 2%
+  @include base-mixins.mobile
+    width: 100%
+    margin-left: 0px
 
 .footer-dialog
   justify-content: end
+
+.progress-bar
+  margin-top: 4vh
+
+.select
+  width: 70px

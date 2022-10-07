@@ -46,8 +46,13 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
     </table>
+
+    <ng-template [ngIf]="getAllVehicle">
+      <div class="progress-bar">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </ng-template>
 
     <div class="paginate">
       <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
