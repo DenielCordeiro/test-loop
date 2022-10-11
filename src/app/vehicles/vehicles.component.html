@@ -5,40 +5,54 @@
     <hr class="line">
 
     <div class="header-table">
-      <div class="search">
-        <input type="text" class="search-input">
-      </div>
+      <form [formGroup]="formFilter">
+        <mat-form-field class="example-form-field search" appearance="fill">
+          <mat-label>Search</mat-label>
+<!--          <input matInput type="text" class="search-input" [ngModel]="searchInput" (ngModelChange)="searchInput = $event">-->
+          <input matInput type="text" class="search-input" formControlName="inputSearch">
+        </mat-form-field>
+
+        <button mat-mini-fab color="primary" type="submit" (click)="search()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </form>
 
       <div class="add">
-        <button mat-button color="primary" (click)="add('' || null)">
+        <button mat-button color="primary" (click)="add()">
           <span>Add Vehicle</span>
         </button>
       </div>
     </div>
 
-    <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
+    <ng-template [ngIf]="getAllVehicle">
+      <div class="progress-bar">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </ng-template>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
       <ng-container matColumnDef="icon">
         <th mat-header-cell *matHeaderCellDef>icon</th>
-        <td mat-cell *matCellDef="let element"><img src="https://cdn.readymix.io/img/icons/{{ element.icon }}"></td>
+        <td mat-cell *matCellDef="let vehicle"><img src="https://cdn.readymix.io/img/icons/{{ vehicle.icon }}"></td>
       </ng-container>
 
       <ng-container matColumnDef="codbt">
         <th mat-header-cell *matHeaderCellDef>internal Code</th>
-        <td mat-cell *matCellDef="let element"> {{ element.codbt }} </td>
+        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.codbt }} </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+        <td mat-cell *matCellDef="let vehicle"> {{ vehicle.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="edit(element)">
+        <td mat-cell *matCellDef="let vehicle">
+          <button mat-icon-button (click)="edit(vehicle.id)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button (click)="deleteVehicle(element)">
+          <button mat-icon-button (click)="deleteVehicle(vehicle.id)">
             <mat-icon class="mat-buttons">delete</mat-icon>
           </button>
         </td>
@@ -47,12 +61,6 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
-    <ng-template [ngIf]="getAllVehicle">
-      <div class="progress-bar">
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      </div>
-    </ng-template>
 
     <div class="paginate">
       <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>

@@ -11,8 +11,12 @@ export class VehiclesService {
 
   constructor( private http: HttpClient ) { }
 
-  getElements(): Promise<{data:Vehicle[]}> {
+  getVehicles(): Promise<{data:Vehicle[]}> {
     return lastValueFrom(this.http.get<{data:Vehicle[]}>(`${environment.apiVehicles}`));
+  }
+
+  getVehicle(id: number): Promise<{data:Vehicle}> {
+    return lastValueFrom(this.http.get<{data:Vehicle}>(`${environment.apiVehicles}/${id}`));
   }
 
   createVehicle(vehicle: Vehicle): Promise<Vehicle> {

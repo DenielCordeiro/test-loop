@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { FormGroup, FormBuilder, Validators} from '@angular/forms'
 import { Vehicle } from '../../models/vehicle.model';
 import { VehiclesService } from "../../services/vehicles-service.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add',
@@ -11,7 +11,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./add-or-edit.component.sass']
 })
 export class AddOrEditComponent implements OnInit {
-  selected = '';
   form!: FormGroup;
   icons: string[] = [
     'default.png',
@@ -35,7 +34,7 @@ export class AddOrEditComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: Vehicle,
+    public idVehicle: number,
     public dialogRef: MatDialogRef<AddOrEditComponent>,
     public vehiclesService: VehiclesService,
     private formBuilder: FormBuilder,
@@ -50,7 +49,24 @@ export class AddOrEditComponent implements OnInit {
       "name": [null],
     });
 
-    this.form.patchValue(this.data);
+    if (this.idVehicle != null) {
+      this.downloadVehicle();
+    }
+  }
+
+  downloadVehicle(): void {
+    this.loading = true;
+    this.vehiclesService.getVehicle(this.idVehicle)
+      .then((result: { data: Vehicle }) => {
+        this.form.patchValue(result.data);
+      })
+      .catch((error) => {
+        this.openSnackBar('[ERROR!]', 'closed');
+        console.log(error);
+      })
+      .finally(() => {
+        this.loading = false;
+      })
   }
 
   add(): void {
@@ -67,7 +83,8 @@ export class AddOrEditComponent implements OnInit {
         this.dialogRef.close(true);
       })
       .catch((error) => {
-        this.openSnackBar('[ERROR!]   ' + console.error(error.error), 'closed');
+        this.openSnackBar('[ERROR!]', 'closed');
+        console.log(error);
       })
       .finally(() => {
         this.loading = false;
@@ -76,20 +93,22 @@ export class AddOrEditComponent implements OnInit {
 
   edit(): void {
     let additional: {} = {
-      "id": this.data.id,
+      "id": this.idVehicle,
       "company": 429,
       "type": 0
     }
     let vehicle =  Object.assign(new Vehicle(),  this.form.value, additional);
 
     this.loading = true;
+
     this.vehiclesService.editVehicle(vehicle)
       .then(() => {
         this.openSnackBar('Edited Vehicle','close');
         this.dialogRef.close(true);
       })
       .catch((error) => {
-        this.openSnackBar('[ERROR!]   ' + console.error(error.error), 'closed');
+        this.openSnackBar('[ERROR!]', 'closed');
+        console.log(error);
       })
       .finally(() => {
         this.loading = false;

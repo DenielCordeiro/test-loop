@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddOrEditComponent } from './add-or-edit/add-or-edit.component';
 import { DeleteComponent } from './delete/delete.component';
-import {MatTable, MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource} from '@angular/material/table';
 import { VehiclesService } from '../services/vehicles-service.service';
 import { Vehicle } from '../models/vehicle.model';
-import {FormGroup} from "@angular/forms";
-import {DialogRef} from "@angular/cdk/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-vehicles',
@@ -16,57 +15,78 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   providers: [ VehiclesService ]
 })
 export class VehiclesComponent implements OnInit {
-  @ViewChild(MatTable)
-  table!: MatTable<any>;
   dataSource!: MatTableDataSource<Vehicle>;
+  formFilter!: FormGroup;
   displayedColumns: string[] = ['icon', 'codbt', 'name', 'actions'];
   getAllVehicle: boolean = false;
+  vehicles!: Vehicle[];
 
   constructor(
     public dialog: MatDialog,
-    public vehiclesService: VehiclesService
+    public vehiclesService: VehiclesService,
+    private _snackBar: MatSnackBar,
+    private formBuilder: FormBuilder,
   ) {
     this.dataSource = new MatTableDataSource();
   }
 
   ngOnInit(): void {
+    this.formFilter = this.formBuilder.group({
+      "inputSearch": [''],
+    });
+
     this.getVehicles();
   }
 
-  add(data: Vehicle | null): void {
-    const dialogRef = this.dialog.open<AddOrEditComponent,Vehicle>(AddOrEditComponent, {
+  getVehicles() {
+    this.getAllVehicle = true;
+    this.vehiclesService.getVehicles()
+      .then((data: { data: Vehicle[] }) => {
+         this.dataSource.data = data.data;
+         this.vehicles = data.data
+      })
+      .catch((error) => {
+        this.openSnackBar('[ERROR!]', 'closed');
+      })
+      .finally(() => {
+        this.getAllVehicle = false;
+      })
+  }
+
+  search(): void {
+    let vehiclesFiltered = this.vehicles.filter((vehicle) => {
+      if (vehicle.name?.indexOf(this.formFilter.value.inputSearch) != -1){
+        return true
+      } else {
+        return false
+      }
+    })
+
+    this.dataSource.data = vehiclesFiltered
+    console.log(vehiclesFiltered)
+  }
+
+  addOrEdit(id: number | null): void {
+    const dialogRef = this.dialog.open<AddOrEditComponent, number>(AddOrEditComponent, {
       width: '70%',
-      data: data
+      data: id
     });
 
     this.reloadTable(dialogRef);
   }
 
-  getVehicles() {
-    this.getAllVehicle = true;
-    this.vehiclesService.getElements()
-      .then((data) => {
-        console.log(data);
-        this.dataSource.data = data.data;
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        this.getAllVehicle = false;
-      })
-
-
+  edit(id: number): void {
+    this.addOrEdit(id);
   }
 
-  edit(data: Vehicle): void {
-    this.add(data);
+  add() : void {
+    this.addOrEdit(null);
   }
 
-  deleteVehicle(data: Vehicle): void {
-    const dialogRef = this.dialog.open(DeleteComponent, {
+  deleteVehicle(id: number): void {
+    const dialogRef = this.dialog.open<DeleteComponent, number>(DeleteComponent, {
       width: '70%',
-      data: data
+      data: id
     });
 
     this.reloadTable(dialogRef);
@@ -78,5 +98,9 @@ export class VehiclesComponent implements OnInit {
         this.getVehicles();
       }
     })
+  }
+
+  openSnackBar(message: string,action: string) {
+    this._snackBar.open(message, action);
   }
 }

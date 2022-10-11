@@ -1,14 +1,14 @@
 <h1 mat-dialog-title>want to delete this vehicle ?</h1>
 
-<mat-card>
-  <p><img src="https://cdn.readymix.io/img/icons/{{ this.data.icon }}"></p>
-  <p><strong>Internal Code: </strong> {{ this.data.codbt }}</p>
-  <p><strong>Name: </strong> {{ this.data.name }}</p>
+<mat-card *ngIf="vehicle != null">
+  <p><img src="https://cdn.readymix.io/img/icons/{{ vehicle.icon }}"></p>
+  <p><strong>Internal Code: </strong> {{ vehicle.codbt }}</p>
+  <p><strong>Name: </strong>{{ vehicle.name }}</p>
 </mat-card>
 
 <div mat-dialog-actions>
   <button mat-button (click)="cancel()">Cancel</button>
-  <button mat-stroked-button cdkFocusInitial color="warn" (click)="onDelete()">delete</button>
+  <button mat-stroked-button cdkFocusInitial color="warn" typeof="submit" (click)="onDelete()">delete</button>
 </div>
 
 <ng-template [ngIf]="loading">
