@@ -20,6 +20,24 @@ export class VehiclesComponent implements OnInit {
   displayedColumns: string[] = ['icon', 'codbt', 'name', 'actions'];
   getAllVehicle: boolean = false;
   vehicles!: Vehicle[];
+  // changes = new Subject<void>();
+
+  // firstPageLabel = $localize`First page`;
+  // itemsPerPageLabel = $localize`Items per page:`;
+  // lastPageLabel = $localize`Last page`;
+
+  // // You can set labels to an arbitrary string too, or dynamically compute
+  // // it through other third-party internationalization libraries.
+  // nextPageLabel = 'Next page';
+  // previousPageLabel = 'Previous page';
+
+  // getRangeLabel(page: number, pageSize: number, length: number): string {
+  //   if (length === 0) {
+  //     return $localize`Page 1 of 1`;
+  //   }
+  //   const amountPages = Math.ceil(length / pageSize);
+  //   return $localize`Page ${page + 1} of ${amountPages}`;
+  // }
 
   constructor(
     public dialog: MatDialog,
@@ -63,7 +81,6 @@ export class VehiclesComponent implements OnInit {
     })
 
     this.dataSource.data = vehiclesFiltered
-    console.log(vehiclesFiltered)
   }
 
   addOrEdit(id: number | null): void {
