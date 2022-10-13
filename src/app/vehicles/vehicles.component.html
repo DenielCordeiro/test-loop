@@ -5,17 +5,10 @@
     <hr class="line">
 
     <div class="header-table">
-      <form [formGroup]="formFilter">
-        <mat-form-field class="example-form-field search" appearance="fill">
-          <mat-label>Search</mat-label>
-<!--          <input matInput type="text" class="search-input" [ngModel]="searchInput" (ngModelChange)="searchInput = $event">-->
-          <input matInput type="text" class="search-input" formControlName="inputSearch">
-        </mat-form-field>
-
-        <button mat-mini-fab color="primary" type="submit" (click)="search()">
-          <mat-icon>search</mat-icon>
-        </button>
-      </form>
+      <mat-form-field class="example-form-field search" appearance="fill">
+        <mat-label>Search</mat-label>
+        <input matInput type="text" class="search-input" (input)="getValue($event)">
+      </mat-form-field>
 
       <div class="add">
         <button mat-button color="primary" (click)="add()">

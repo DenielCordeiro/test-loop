@@ -16,43 +16,20 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 })
 export class VehiclesComponent implements OnInit {
   dataSource!: MatTableDataSource<Vehicle>;
-  formFilter!: FormGroup;
   displayedColumns: string[] = ['icon', 'codbt', 'name', 'actions'];
-  getAllVehicle: boolean = false;
   vehicles!: Vehicle[];
-  // changes = new Subject<void>();
-
-  // firstPageLabel = $localize`First page`;
-  // itemsPerPageLabel = $localize`Items per page:`;
-  // lastPageLabel = $localize`Last page`;
-
-  // // You can set labels to an arbitrary string too, or dynamically compute
-  // // it through other third-party internationalization libraries.
-  // nextPageLabel = 'Next page';
-  // previousPageLabel = 'Previous page';
-
-  // getRangeLabel(page: number, pageSize: number, length: number): string {
-  //   if (length === 0) {
-  //     return $localize`Page 1 of 1`;
-  //   }
-  //   const amountPages = Math.ceil(length / pageSize);
-  //   return $localize`Page ${page + 1} of ${amountPages}`;
-  // }
+  getAllVehicle: boolean = false;
+  textSearchFilter: string = '';
 
   constructor(
     public dialog: MatDialog,
     public vehiclesService: VehiclesService,
     private _snackBar: MatSnackBar,
-    private formBuilder: FormBuilder,
   ) {
     this.dataSource = new MatTableDataSource();
   }
 
   ngOnInit(): void {
-    this.formFilter = this.formBuilder.group({
-      "inputSearch": [''],
-    });
-
     this.getVehicles();
   }
 
@@ -71,9 +48,14 @@ export class VehiclesComponent implements OnInit {
       })
   }
 
-  search(): void {
+  getValue(event: Event): void {
+    this.textSearchFilter = (event.target as HTMLInputElement).value.toLowerCase();
+    this.search(this.textSearchFilter);
+  }
+
+  search(text: string): void {
     let vehiclesFiltered = this.vehicles.filter((vehicle) => {
-      if (vehicle.name?.indexOf(this.formFilter.value.inputSearch) != -1){
+      if (vehicle.name?.toLowerCase().indexOf(text) != -1 || vehicle.codbt?.toLowerCase().indexOf(text) != -1){
         return true
       } else {
         return false
