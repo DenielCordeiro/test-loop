@@ -6,7 +6,6 @@ import { MatTableDataSource} from '@angular/material/table';
 import { VehiclesService } from '../services/vehicles-service.service';
 import { Vehicle } from '../models/vehicle.model';
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-vehicles',
@@ -35,10 +34,10 @@ export class VehiclesComponent implements OnInit {
 
   getVehicles() {
     this.getAllVehicle = true;
-    this.vehiclesService.getVehicles()
-      .then((data: { data: Vehicle[] }) => {
-         this.dataSource.data = data.data;
-         this.vehicles = data.data
+    this.vehiclesService.getResources()
+      .then(vehicle => {
+         this.dataSource.data = vehicle;
+         this.vehicles = vehicle;
       })
       .catch((error) => {
         this.openSnackBar('[ERROR!]', 'closed');

@@ -30,34 +30,34 @@ export class DeleteComponent implements OnInit {
   }
 
   downloadVehicle(): void {
-    this.loading = true;
-    this.vehiclesService.getVehicle(this.idVehicle)
-      .then((result: { data: Vehicle }) => {
-        this.vehicle = result.data;
-      })
-      .catch((error) => {
-        this.openSnackBar('[ERROR!]', 'closed');
-        console.log(error);
-      })
-      .finally(() => {
-        this.loading = false;
-      })
+    // this.loading = true;
+    // this.vehiclesService.getVehicle(this.idVehicle)
+    //   .then((result: { data: Vehicle }) => {
+    //     this.vehicle = result.data;
+    //   })
+    //   .catch((error) => {
+    //     this.openSnackBar('[ERROR!]', 'closed');
+    //     console.log(error);
+    //   })
+    //   .finally(() => {
+    //     this.loading = false;
+    //   })
   }
 
   onDelete(): void {
-    this.loading = true;
-    this.vehiclesService.deleteVehicle(this.vehicle)
-      .then(() => {
-        this.openSnackBar('Deleted Vehicle', 'close')
-        this.dialogRef.close(true);
-      })
-      .catch((error) => {
-        this.openSnackBar('[ERROR!]', 'closed');
-        console.error(error.error);
-      })
-      .finally(() => {
-        this.loading = false;
-      })
+    // this.loading = true;
+    // this.vehiclesService.deleteVehicle(this.vehicle)
+    //   .then(() => {
+    //     this.openSnackBar('Deleted Vehicle', 'close')
+    //     this.dialogRef.close(true);
+    //   })
+    //   .catch((error) => {
+    //     this.openSnackBar('[ERROR!]', 'closed');
+    //     console.error(error.error);
+    //   })
+    //   .finally(() => {
+    //     this.loading = false;
+    //   })
   }
 
   openSnackBar(message: string,action: string) {

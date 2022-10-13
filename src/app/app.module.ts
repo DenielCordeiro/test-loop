@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
@@ -23,7 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
-import { environment } from '../environments/environment';
+import { NgxWebstorageModule } from "ngx-webstorage";
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -60,10 +59,10 @@ import { DeleteComponent } from './vehicles/delete/delete.component';
         MatSelectModule,
         MatProgressBarModule,
         MatSnackBarModule,
-        AngularFireModule.initializeApp(environment.firebase),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         ReactiveFormsModule,
+        NgxWebstorageModule.forRoot(),
     ],
   providers: [
   ],
