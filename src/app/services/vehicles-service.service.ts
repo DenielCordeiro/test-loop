@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { Vehicle } from '../models/vehicle.model';
-import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+import { lastValueFrom } from 'rxjs';
 import { environment } from './../../environments/environment';
 
 @Injectable({
@@ -10,22 +9,25 @@ import { environment } from './../../environments/environment';
 })
 export class VehiclesService {
 
-  constructor( private http: HttpClient, private authService: AuthService ) { }
+  constructor( private http: HttpClient ) { }
 
-  getElements(): Observable<Vehicle[]> {
-    const token = this.authService.getAuthorizationToken();
-    return this.http.get<Vehicle[]>(`${environment.getVehicles}`);
+  getVehicles(): Promise<{data:Vehicle[]}> {
+    return lastValueFrom(this.http.get<{data:Vehicle[]}>(`${environment.apiVehicles}`));
   }
 
-  createElements(element: Vehicle): Observable<Vehicle> {
-    return this.http.post<Vehicle>(`${environment.getVehicles}`, element);
+  getVehicle(id: number): Promise<{data:Vehicle}> {
+    return lastValueFrom(this.http.get<{data:Vehicle}>(`${environment.apiVehicles}/${id}`));
   }
 
-  editElements(element: Vehicle): Observable<any> {
-    return this.http.put<any>(`${environment.getVehicles}/${element.id}`, element);
+  createVehicle(vehicle: Vehicle): Promise<Vehicle> {
+    return lastValueFrom(this.http.post<Vehicle>(`${environment.apiVehicles}`, vehicle));
   }
 
-  deleteElement(element: Vehicle): Observable<any> {
-    return this.http.delete<any>(`${environment.getVehicles}/${element.id}`);
+  editVehicle(vehicle: Vehicle): Promise<Vehicle> {
+    return lastValueFrom(this.http.put<Vehicle>(`${environment.apiVehicles}/${vehicle.id}`, vehicle));
+  }
+
+  deleteVehicle(vehicle: Vehicle): Promise<Vehicle> {
+    return lastValueFrom(this.http.delete<Vehicle>(`${environment.apiVehicles}/${vehicle.id}`));
   }
 }

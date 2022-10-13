@@ -1,45 +1,39 @@
-<h1 *ngIf="isChange" mat-dialog-title>Create Vehicle</h1>
-<h1 *ngIf="!isChange" mat-dialog-title>Edit Vehicle</h1>
+<h1 *ngIf="idVehicle == null" mat-dialog-title>Create Vehicle</h1>
+<h1 *ngIf="idVehicle != null" mat-dialog-title>Edit Vehicle</h1>
 
-<div mat-dialog-content class="content">
-  <mat-form-field appearance="fill" class="collum">
-    <mat-label>Icon</mat-label>
-    <mat-select [(value)]="selected" [(ngModel)]="data.icon">
-      <mat-option>None</mat-option>
-      <mat-option value="default.png"><img src="https://cdn.readymix.io/img/icons/default.png"></mat-option>
-      <mat-option value="A_34.png"><img src="https://cdn.readymix.io/img/icons/A_34.png"></mat-option>
-      <mat-option value="B_19.png"><img src="https://cdn.readymix.io/img/icons/B_19.png"></mat-option>
-      <mat-option value="L_13.png"><img src="https://cdn.readymix.io/img/icons/L_13.png"></mat-option>
-      <mat-option value="1.png"><img src="https://cdn.readymix.io/img/icons/1.png"></mat-option>
-      <mat-option value="5.png"><img src="https://cdn.readymix.io/img/icons/M_5.png"></mat-option>
-      <mat-option value="A_39.png"><img src="https://cdn.readymix.io/img/icons/A_39.png"></mat-option>
-      <mat-option value="Y_1.png"><img src="https://cdn.readymix.io/img/icons/Y_1.png"></mat-option>
-      <mat-option value="H_4.png"><img src="https://cdn.readymix.io/img/icons/H_4.png"></mat-option>
-      <mat-option value="O_2.png"><img src="https://cdn.readymix.io/img/icons/O_2.png"></mat-option>
-      <mat-option value="M_21.png"><img src="https://cdn.readymix.io/img/icons/M_21.png"></mat-option>
-      <mat-option value="L_7.png"><img src="https://cdn.readymix.io/img/icons/L_7.png"></mat-option>
-      <mat-option value="Z_6.png"><img src="https://cdn.readymix.io/img/icons/Z_6.png"></mat-option>
-      <mat-option value="M_23.png"><img src="https://cdn.readymix.io/img/icons/M_23.png"></mat-option>
-      <mat-option value="Z_24.png"><img src="https://cdn.readymix.io/img/icons/Z_24.png"></mat-option>
-      <mat-option value="M_13.png"><img src="https://cdn.readymix.io/img/icons/M_13.png"></mat-option>
-    </mat-select>
-  </mat-form-field>
+  <form [formGroup]="form">
 
-  <mat-form-field appearance="fill" class="collum">
-    <mat-label>Internal Code</mat-label>
-    <input matInput [(ngModel)]="data.codbt">
-  </mat-form-field>
+    <div mat-dialog-content class="content">
+      <mat-form-field appearance="fill" class="select">
+        <mat-label *ngIf="this.form.value.icon == null">icon</mat-label>
+        <mat-label *ngIf="this.form.value.icon != null"><img [src]=" urlIcon + this.form.value.icon"></mat-label>
+        <mat-select formControlName="icon">
+          <mat-option *ngFor="let icon of icons" [value]="icon"><img [src]=" urlIcon + icon "></mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill" class="collum">
-    <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="data.name">
-  </mat-form-field>
-</div>
+      <mat-form-field appearance="fill" class="collum">
+        <mat-label>Internal Code</mat-label>
+        <input matInput formControlName="codbt">
+      </mat-form-field>
 
-<hr>
+      <mat-form-field appearance="fill" class="collum">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+    </div>
 
-<div mat-dialog-actions class="footer-dialog">
-  <button mat-button (click)="cancel()">Cancel</button>
-  <button *ngIf="isChange" mat-stroked-button [mat-dialog-close]="data" cdkFocusInitial color="primary">Create</button>
-  <button *ngIf="!isChange" mat-stroked-button [mat-dialog-close]="data" cdkFocusInitial color="primary">Edit Vehicle</button>
-</div>
+    <hr>
+
+    <div mat-dialog-actions class="footer-dialog">
+      <button mat-button (click)="cancel()">Cancel</button>
+      <button *ngIf="idVehicle == null" mat-stroked-button color="primary" (click)="add()" [disabled]="form.invalid" type="submit">Create</button>
+      <button *ngIf="idVehicle != null" mat-stroked-button color="primary" (click)="edit()" [disabled]="form.invalid" type="submit">Edit Vehicle</button>
+    </div>
+  </form>
+
+<ng-template [ngIf]="loading">
+  <div class="progress-bar">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</ng-template>
