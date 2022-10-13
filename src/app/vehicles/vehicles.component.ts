@@ -48,7 +48,7 @@ export class VehiclesComponent implements OnInit {
       })
   }
 
-  getValue(event: Event): void {
+  getValueAndFilter(event: Event): void {
     this.textSearchFilter = (event.target as HTMLInputElement).value.toLowerCase();
     this.search(this.textSearchFilter);
   }
