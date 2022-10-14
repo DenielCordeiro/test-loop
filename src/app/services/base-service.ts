@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BaseModel } from "../models/base-model";
 import { LocalStorageService } from "ngx-webstorage";
 import { environment } from "../../environments/environment";
@@ -35,7 +35,7 @@ export abstract class BaseService<T extends BaseModel> {
       'refresh': environment.refresh
     })
 
-    return  headers
+    return  headers;
   }
 
   public getResources(): Promise<T[]> {
@@ -48,38 +48,36 @@ export abstract class BaseService<T extends BaseModel> {
   }
 
   public getResource(id: number): Promise<T> {
-    return lastValueFrom(this.http.get<LoopApiResponse<T>>(this.route + id ))
+    return lastValueFrom(this.http.get<LoopApiResponse<T>>(`${this.route}/${id}`))
       .then(result => {
         return this.handleResponse(result) as T;
-      })
+      });
   }
 
   public createResource(model: BaseModel): Promise<T> {
     return lastValueFrom(this.http.post<LoopApiResponse<T>>(this.route, model))
       .then(result => {
         return this.handleResponse(result) as T;
-      })
+      });
   }
 
-  public updateResource(BaseModel: T | [], id: number) {
-    return {}
+  public updateResource(model: BaseModel, id: number): Promise<T> {
+    return lastValueFrom(this.http.put<LoopApiResponse<T>>(`${this.route}/${id}`, model))
+      .then(result => {
+        return this.handleResponse(result) as T;
+      });
   }
 
-  // editVehicle(vehicle: Vehicle): Promise<Vehicle> {
-  //   return lastValueFrom(this.http.put<Vehicle>(`${environment.apiVehicles}/${vehicle.id}`, vehicle));
-  // }
-
-  public delete(id: number): boolean {
-    return true;
+  public delete(id: number): Promise<boolean> {
+    return lastValueFrom(this.http.delete<LoopApiResponse<T>>(`${this.route}/${id}`))
+      .then((result) => {
+        return this.handleResponse(result) as true;
+      });
   }
-
-  // deleteVehicle(vehicle: Vehicle): Promise<Vehicle> {
-  //   return lastValueFrom(this.http.delete<Vehicle>(`${environment.apiVehicles}/${vehicle.id}`));
-  // }
 
   protected handleResponse(response: LoopApiResponse<T>) {
     if(response.success) {
-      return response.data
+      return response.data;
     } else {
       throw new Error("Api 200, mas success falso");
     }

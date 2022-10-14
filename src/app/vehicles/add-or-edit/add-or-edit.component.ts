@@ -48,71 +48,71 @@ export class AddOrEditComponent implements OnInit {
       "codbt": [null, Validators.required],
       "name": [null],
     });
-    //
-    // if (this.idVehicle != null) {
-    //   this.downloadVehicle();
-    // }
+
+    if (this.idVehicle != null) {
+      this.downloadVehicle();
+    }
   }
 
-  // downloadVehicle(): void {
-  //   this.loading = true;
-  //   this.vehiclesService.getVehicle(this.idVehicle)
-  //     .then((result: { data: Vehicle }) => {
-  //       this.form.patchValue(result.data);
-  //     })
-  //     .catch((error) => {
-  //       this.openSnackBar('[ERROR!]', 'closed');
-  //       console.log(error);
-  //     })
-  //     .finally(() => {
-  //       this.loading = false;
-  //     })
-  // }
+  downloadVehicle(): void {
+    this.loading = true;
+    this.vehiclesService.getResource(this.idVehicle)
+      .then(vehicle => {
+        this.form.patchValue(vehicle);
+      })
+      .catch((error) => {
+        this.openSnackBar('[ERROR!] unable load data this vehicle :(', 'closed');
+        console.log(error);
+      })
+      .finally(() => {
+        this.loading = false;
+      })
+  }
 
   add(): void {
-    // let additional: {} = {
-    //   "company": 429,
-    //   "type": 0
-    // }
-    // let vehicle: Vehicle =  Object.assign(new Vehicle(), this.form.value, additional);
-    // vehicle.type = 0
-    // this.loading = true;
-    // this.vehiclesService.createVehicle(vehicle)
-    //   .then(() => {
-    //     this.openSnackBar('Created Vehicle', 'close');
-    //     this.dialogRef.close(true);
-    //   })
-    //   .catch((error) => {
-    //     this.openSnackBar('[ERROR!]', 'closed');
-    //     console.log(error);
-    //   })
-    //   .finally(() => {
-    //     this.loading = false;
-    //   })
+    let additional: {} = {
+      "company": 429,
+      "type": 0
+    }
+    let vehicle: Vehicle =  Object.assign(new Vehicle(), this.form.value, additional);
+    vehicle.type = 0
+    this.loading = true;
+    this.vehiclesService.createResource(vehicle)
+      .then(() => {
+        this.openSnackBar('Created Vehicle', 'close');
+        this.dialogRef.close(true);
+      })
+      .catch((error) => {
+        this.openSnackBar('[ERROR!] could not create this vehicle :(', 'closed');
+        console.log(error);
+      })
+      .finally(() => {
+        this.loading = false;
+      })
   }
 
   edit(): void {
-    // let additional: {} = {
-    //   "id": this.idVehicle,
-    //   "company": 429,
-    //   "type": 0
-    // }
-    // let vehicle =  Object.assign(new Vehicle(),  this.form.value, additional);
-    //
-    // this.loading = true;
-    //
-    // this.vehiclesService.editVehicle(vehicle)
-    //   .then(() => {
-    //     this.openSnackBar('Edited Vehicle','close');
-    //     this.dialogRef.close(true);
-    //   })
-    //   .catch((error) => {
-    //     this.openSnackBar('[ERROR!]', 'closed');
-    //     console.log(error);
-    //   })
-    //   .finally(() => {
-    //     this.loading = false;
-    //   })
+    let additional: {} = {
+      "id": this.idVehicle,
+      "company": 429,
+      "type": 0
+    }
+    let vehicle =  Object.assign(new Vehicle(),  this.form.value, additional);
+
+    this.loading = true;
+
+    this.vehiclesService.updateResource(vehicle, this.idVehicle)
+      .then(() => {
+        this.openSnackBar('Edited Vehicle','close');
+        this.dialogRef.close(true);
+      })
+      .catch((error) => {
+        this.openSnackBar('[ERROR!] could not update this vehicle :(', 'closed');
+        console.log(error);
+      })
+      .finally(() => {
+        this.loading = false;
+      })
   }
 
   cancel(): void {

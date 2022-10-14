@@ -40,7 +40,8 @@ export class VehiclesComponent implements OnInit {
          this.vehicles = vehicle;
       })
       .catch((error) => {
-        this.openSnackBar('[ERROR!]', 'closed');
+        console.log(error);
+        this.openSnackBar('[ERROR!] unable to load vehicles :(', 'closed');
       })
       .finally(() => {
         this.getAllVehicle = false;
