@@ -1,13 +1,9 @@
 <body>
-  <section *ngIf="loggedInUser" id="content">
+  <section *ngIf="loggedInUser" id="header">
     <header>
       <app-header></app-header>
     </header>
-
-    <app-vehicles></app-vehicles>
   </section>
 
-  <section *ngIf="!loggedInUser" id="login">
-    <app-login></app-login>
-  </section>
+  <router-outlet></router-outlet>
 </body>

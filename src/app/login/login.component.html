@@ -1,6 +1,6 @@
 <div class="container">
   <div class="content-form">
-    <form #formLogin="ngForm">
+    <form [formGroup]="form">
       <div class="title">
         <h1>Login</h1>
       </div>
@@ -8,17 +8,17 @@
       <div class="form-group fields">
         <mat-form-field appearance="fill">
           <mat-label>E-mail:</mat-label>
-          <input type="email" class="form-control" matInput name="email" id="email" #userName="ngModel" [(ngModel)]="login.email">
+          <input type="email" matInput formControlName="email">
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Password:</mat-label>
-          <input type="password" class="form-control" matInput name="password" id="password" #password="ngModel" [(ngModel)]="login.password">
+          <input type="password" matInput formControlName="password">
         </mat-form-field>
       </div>
 
       <div class="buttons">
-        <button type="submit" mat-stroked-button color="primary" (click)="makeLogin()" [disabled]="!formLogin.form.valid">Login</button>
+        <button type="submit" mat-stroked-button color="primary" (click)="makeLogin()" [disabled]="form.invalid">Login</button>
       </div>
     </form>
   </div>

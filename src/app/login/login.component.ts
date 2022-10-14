@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 import { Login } from '../models/login.model';
@@ -10,22 +10,31 @@ import { Login } from '../models/login.model';
 })
 
 export class LoginComponent implements OnInit {
-  @ViewChild('formLogin') formLogin! : NgForm
-
-  login: Login = new Login()
+  form!: FormGroup;
+  login!: Login;
 
   constructor(
-    public authService: AuthService,
+    private authService: AuthService,
     private router: Router,
+    private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.buildForm();
+  }
+
+  buildForm(): void {
+    this.form = this.formBuilder.group({
+      "email": [null, [Validators.required, Validators.email]],
+      "password": [null, Validators.required]
+    });
+  }
 
   async makeLogin() {
     try{
-      if (this.formLogin.form.valid) {
+      if (this.form.valid) {
         await
-          this.authService.authUser(this.login)
+          this.authService.authUser(this.form.value)
           this.router.navigate(["/vehicles"]);
       }
     } catch (error) {
