@@ -14,7 +14,6 @@ export abstract class BaseService<T extends BaseModel> {
   localStorage!: LocalStorageService;
   route!: string;
 
-
   constructor(
     http: HttpClient,
     localStorage: LocalStorageService,
