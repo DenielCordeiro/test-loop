@@ -56,8 +56,7 @@
     </table>
 
     <div class="paginate">
-      <mat-paginator [length]="100" [pageSizeOptions]="[2, 5, 10]" aria-label="Select page">
-      </mat-paginator>
+      <mat-paginator #paginator [length]="100" [pageSize]="3" [pageSizeOptions]="[1, 3, 6]" aria-label="Select page"></mat-paginator>
     </div>
   </div>
 </div>
