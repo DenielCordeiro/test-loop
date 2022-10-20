@@ -40,7 +40,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-
   getVehicles() {
     this.getAllVehicle = true;
     this.vehiclesService.getResources()
