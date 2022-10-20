@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddOrEditComponent } from './add-or-edit/add-or-edit.component';
 import { DeleteComponent } from './delete/delete.component';
@@ -6,6 +6,7 @@ import { MatTableDataSource} from '@angular/material/table';
 import { VehiclesService } from '../services/vehicles-service.service';
 import { Vehicle } from '../models/vehicle.model';
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-vehicles',
@@ -13,17 +14,20 @@ import { MatSnackBar } from "@angular/material/snack-bar";
   styleUrls: ['./vehicles.component.sass'],
   providers: [ VehiclesService ]
 })
-export class VehiclesComponent implements OnInit {
+export class VehiclesComponent implements OnInit, AfterViewInit {
+  @ViewChild('paginator') paginator!: MatPaginator;
+
   dataSource!: MatTableDataSource<Vehicle>;
   displayedColumns: string[] = ['icon', 'codbt', 'name', 'actions'];
   vehicles!: Vehicle[];
+
   getAllVehicle: boolean = false;
   textSearchFilter: string = '';
 
   constructor(
     public dialog: MatDialog,
     public vehiclesService: VehiclesService,
-    private _snackBar: MatSnackBar,
+    private _snackBar: MatSnackBar
   ) {
     this.dataSource = new MatTableDataSource();
   }
@@ -31,6 +35,11 @@ export class VehiclesComponent implements OnInit {
   ngOnInit(): void {
     this.getVehicles();
   }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
 
   getVehicles() {
     this.getAllVehicle = true;
